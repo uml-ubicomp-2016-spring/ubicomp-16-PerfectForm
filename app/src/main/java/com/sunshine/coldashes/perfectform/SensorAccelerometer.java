@@ -11,6 +11,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,13 +33,14 @@ import com.jjoe64.graphview.series.Series;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by Coldashes on 3/6/2016.
  */
 public class SensorAccelerometer extends Activity implements SensorEventListener {
 
-    private TextView mXValueView, mYValueView, mZValueView;
+    private TextView mXValueView, mYValueView, mZValueView,mTimer;
     private long mLastUpdate;
     static int i = 0;
     static int timesRun = 0;
@@ -52,6 +54,10 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
     private static final int UPDATE_THRESHOLD = 1000;
     private SensorManager mSensorManager;
     private Sensor mAcellerometer;
+    private ArrayList<Double> listX = new ArrayList<Double>();
+    private ArrayList<Double> listY = new ArrayList<Double>();
+    private ArrayList<Double> listZ = new ArrayList<Double>();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,7 +66,7 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
         mXValueView = (TextView) findViewById(R.id.x_value_view);
         mYValueView = (TextView) findViewById(R.id.y_value_view);
         mZValueView = (TextView) findViewById(R.id.z_value_view);
-
+        mTimer = (TextView) findViewById(R.id.timer_textview);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 
         if (null == (mAcellerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)))
@@ -103,40 +109,42 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (startRecording) {
-            if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
-                long actualTime = System.currentTimeMillis();
 
-                if (actualTime - mLastUpdate > UPDATE_THRESHOLD) {
-                    double x = event.values[0], y = event.values[1], z = event.values[2];
+        if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION && startRecording) {
+            long actualTime = System.currentTimeMillis();
 
-                    mXValueView.setText(String.valueOf(x));
-                    mYValueView.setText(String.valueOf(y));
-                    mZValueView.setText(String.valueOf(z));
 
-                    if (i < 600) {
-                        di++;
+            //if 1 second has not passed and have < 50 samples
+            double x = event.values[0], y = event.values[1], z = event.values[2];
 
-                        DataPoint pX = new DataPoint(di, x);
-                        ArrayX[i] = pX;
+            mXValueView.setText(String.valueOf(x));
+            mYValueView.setText(String.valueOf(y));
+            mZValueView.setText(String.valueOf(z));
 
-                        DataPoint pY = new DataPoint(di, y);
-                        ArrayY[i] = pY;
+            listX.add(x);
+            listY.add(y);
+            listZ.add(z);
 
-                        DataPoint pZ = new DataPoint(di, z);
-                        ArrayZ[i] = pZ;
 
-                        i++;
-                    } else {
-                        startRecording = false;
-                        Vibrator v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
-                        // Vibrate for 500 milliseconds
-                        v.vibrate(1000);
-                    }
 
-                    mLastUpdate = System.currentTimeMillis();
-                }
-            }
+            //di++;
+
+            //DataPoint pX = new DataPoint(di, x);
+            //ArrayX[i] = pX;
+
+            //DataPoint pY = new DataPoint(di, y);
+            //ArrayY[i] = pY;
+
+            //DataPoint pZ = new DataPoint(di, z);
+            //ArrayZ[i] = pZ;
+
+            //i++;
+                /*
+                if (startRecording = false) {
+                     }
+                */
+
+            mLastUpdate = System.currentTimeMillis();
         }
     }
 
@@ -186,6 +194,19 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
 
     public void startButton(View view) {
         startRecording = true;
+        new CountDownTimer(1800000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                mTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                mTimer.setText("done!");
+                startRecording = false;
+                Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(1000);
+            }
+        }.start();
 
     }
 
@@ -215,8 +236,6 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
         fileZ.setReadable(true, false);
 
         int x = 0;
-        //Toast newToast = Toast.makeText(this, firstX, Toast.LENGTH_LONG);
-        //newToast.show();
         String newLine = "\n";
         try {
             FileOutputStream outputStreamX;
@@ -225,22 +244,22 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
             outputStreamX = openFileOutput(AccelerometerDataX, Context.MODE_WORLD_READABLE);
             outputStreamY = openFileOutput(AccelerometerDataY, Context.MODE_WORLD_READABLE);
             outputStreamZ = openFileOutput(AccelerometerDataZ, Context.MODE_WORLD_READABLE);
-            do{
-               Double tempX = ArrayX[x].getY();
-                Double tempY = ArrayY[x].getY();
-                Double tempZ = ArrayZ[x].getY();
-               outputStreamX.write(tempX.toString().getBytes());
-               outputStreamX.write(newLine.getBytes());
+            do {
+
+                Double tempX = listX.get(x);
+                Double tempY = listY.get(x);
+                Double tempZ = listZ.get(x);
+                outputStreamX.write(tempX.toString().getBytes());
+                outputStreamX.write(newLine.getBytes());
                 outputStreamY.write(tempY.toString().getBytes());
                 outputStreamY.write(newLine.getBytes());
                 outputStreamZ.write(tempZ.toString().getBytes());
                 outputStreamZ.write(newLine.getBytes());
-
                 x++;
-            } while(x < 600);
+            } while (x < listX.size());
             outputStreamX.close();
-            outputStreamY.close();
-            outputStreamZ.close();
+            //outputStreamY.close();
+            //outputStreamZ.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
