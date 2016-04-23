@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PerfectForm(DoNotChange).iml" filepath="$PROJECT_DIR$/PerfectForm(DoNotChange).iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ubicomp-16-PerfectForm.iml" filepath="$PROJECT_DIR$/ubicomp-16-PerfectForm.iml" />
     </modules>
   </component>
 </project>
