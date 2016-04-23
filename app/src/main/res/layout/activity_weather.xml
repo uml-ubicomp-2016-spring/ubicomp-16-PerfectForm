@@ -10,6 +10,32 @@
         android:text="TEST"
         android:textSize="30sp"
         android:layout_gravity="center"/>
+<<<<<<< HEAD
+
+    <TextView
+        android:id="@+id/condition_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="blank"
+        android:textSize="30sp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/description_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="blank"
+        android:textSize="30sp"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/tempurature_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="blank"
+        android:textSize="30sp"
+        android:layout_gravity="center"/>
+=======
 
     <TextView
         android:id="@+id/condition_textview"
@@ -35,6 +61,34 @@
         android:textSize="30sp"
         android:layout_gravity="center"/>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Temp"
+            android:textSize="30sp" />
+
+        <ImageButton
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:src="@drawable/ic_action_name2" />
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="13 mph"
+            android:textSize="30sp" />
+>>>>>>> origin/master
+
 
     <TextView
         android:id="@+id/wind_textview"
@@ -48,6 +102,7 @@
         android:id="@+id/sunrise_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="blank"
         android:textSize="30sp"
         android:layout_gravity="center"/>
@@ -60,5 +115,10 @@
         android:textSize="30sp"
         android:layout_gravity="center"/>
 
+=======
+        android:text="Refresh Weather Data"
+        android:id="@+id/refresh_button"
+        android:layout_gravity="center_horizontal" />
+>>>>>>> origin/master
 
 </LinearLayout>

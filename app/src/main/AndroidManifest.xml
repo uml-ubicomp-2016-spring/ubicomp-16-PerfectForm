@@ -3,7 +3,10 @@
     package="com.sunshine.coldashes.perfectform">
 
     <uses-permission android:name="android.permission.VIBRATE" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.WRI" />
+=======
+>>>>>>> origin/master
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
@@ -15,18 +18,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".SensorAccelerometer"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity
             android:name=".WeatherActivity"
             android:screenOrientation="portrait">
-        </activity>
 
-        <activity
-            android:name=".ScheduleActivity"
-            android:screenOrientation="portrait">
         </activity>
 
         <activity

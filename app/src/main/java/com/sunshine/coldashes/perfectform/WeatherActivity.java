@@ -2,7 +2,10 @@ package com.sunshine.coldashes.perfectform;
 
 import android.app.Activity;
 import android.content.Context;
+<<<<<<< HEAD
 import android.os.AsyncTask;
+=======
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -28,12 +31,18 @@ import java.net.URL;
 /**
  * Created by ronald on 4/7/16.
  */
+<<<<<<< HEAD
 public class WeatherActivity extends Activity {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?zip=";
+=======
+public class WeatherActivity extends Activity{
+    private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?q=";
+>>>>>>> origin/master
     private static final String SUFFIX_URL = "&units=imperial";
     private static final String IMG_URL = "http://openweathermap.org/img/w/";
 
 
+<<<<<<< HEAD
     private class SendfeedbackJob extends AsyncTask<String, Void, String> {
 
         String town = "";
@@ -120,6 +129,8 @@ public class WeatherActivity extends Activity {
     }
 
 
+=======
+>>>>>>> origin/master
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,6 +143,7 @@ public class WeatherActivity extends Activity {
         //button.setOnClickListener(this);
 
         setContentView(R.layout.activity_weather);
+<<<<<<< HEAD
         //findViewById(R.id.refresh_button).setOnClickListener(refresh_OnClickListener);
 
         //String output = getWeatherData("London,uk&appid=2900f6dcae9280512952aac3a316d4b0");
@@ -146,6 +158,32 @@ public class WeatherActivity extends Activity {
         main += job.execute(base);
 
 
+=======
+        findViewById(R.id.refresh_button).setOnClickListener(refresh_OnClickListener);
+
+        String output = getWeatherData("London,uk&appid=2900f6dcae9280512952aac3a316d4b0");
+
+        System.out.println(output);
+
+        String main = "Main: ";
+
+        try
+        {
+            JSONObject parser = new JSONObject(output);
+
+            JSONObject sys  = parser.getJSONObject("weather");
+            main += sys.getString("main");
+
+            //JSONObject main  = parser.getJSONObject("main");
+            //temperature = main.getString("temp");
+        }
+        catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+
+
+>>>>>>> origin/master
         Context context = getApplicationContext();
         int duration = Toast.LENGTH_LONG;
 
@@ -154,8 +192,25 @@ public class WeatherActivity extends Activity {
 
         setContentView(R.layout.activity_weather);
         TextView textView = (TextView) findViewById(R.id.town_textview);
+<<<<<<< HEAD
         textView.setText(main);
 
+=======
+        textView.setText(test);
+
+    }
+
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+        }
+>>>>>>> origin/master
     }
 
     /*public void onViewCreated(View view, Bundle savedInstanceState)
@@ -210,7 +265,11 @@ public class WeatherActivity extends Activity {
 
 
     //On click listener for button1
+<<<<<<< HEAD
     /*final View.OnClickListener refresh_OnClickListener = new View.OnClickListener() {
+=======
+    final View.OnClickListener refresh_OnClickListener = new View.OnClickListener() {
+>>>>>>> origin/master
         public void onClick(final View v) {
             //Inform the user the button has been clicked
             //Toast.makeText(this, "Button1 clicked.", Toast.LENGTH_SHORT).show();
@@ -219,7 +278,11 @@ public class WeatherActivity extends Activity {
             textView.setText("button has been clicked");
 
         }
+<<<<<<< HEAD
     };*/
+=======
+    };
+>>>>>>> origin/master
 
 
     public String getWeatherData(String location) {
@@ -301,6 +364,7 @@ public class WeatherActivity extends Activity {
         return null;
 
     }
+<<<<<<< HEAD
 
 
     /*
@@ -328,5 +392,7 @@ public class WeatherActivity extends Activity {
     */
 
 
+=======
+>>>>>>> origin/master
 }
 
