@@ -35,12 +35,14 @@
     <EditText
         android:paddingBottom="10dp"
         android:inputType="number"
+        android:maxLength="5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Ex: 01801"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:textSize="30sp"
-        android:id="@+id/zipcode_edittext" />
+        android:id="@+id/zipcode_edittext"
+        android:textAlignment="center" />
 
     <Button
         android:layout_margin="50dp"
