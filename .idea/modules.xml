@@ -3,7 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/ubicomp-16-PerfectForm.iml" filepath="$PROJECT_DIR$/ubicomp-16-PerfectForm.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/perfect-form current.iml" filepath="$PROJECT_DIR$/perfect-form current.iml" />
+>>>>>>> origin/master
     </modules>
   </component>
 </project>

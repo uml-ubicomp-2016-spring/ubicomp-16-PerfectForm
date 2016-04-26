@@ -2,12 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sunshine.coldashes.perfectform">
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRI" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+=======
+    <uses-permission android:name="android.permission.VIBRATE" />
+<<<<<<< HEAD
+    <uses-permission android:name="android.permission.WRI" />
+=======
+>>>>>>> origin/master
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+>>>>>>> origin/master
 
     <application
         android:allowBackup="true"
@@ -17,6 +27,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
+<<<<<<< HEAD
             android:name=".SensorAccelerometer"
             android:screenOrientation="portrait">
         </activity>
@@ -42,6 +53,14 @@
         </activity>
 
         <activity
+=======
+            android:name=".WeatherActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+>>>>>>> origin/master
             android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -36,6 +36,7 @@
         android:textSize="30sp"
         android:layout_gravity="center"
         android:onClick="schedule"
+<<<<<<< HEAD
         android:text="Save"
         android:id="@+id/schedule_btn" />
 
@@ -44,4 +45,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/timer_chrono"
         android:layout_gravity="center_horizontal" />
+=======
+        android:text="Save"/>
+>>>>>>> origin/master
 </LinearLayout>

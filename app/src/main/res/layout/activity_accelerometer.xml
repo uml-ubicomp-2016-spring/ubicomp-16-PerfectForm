@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<<<<<<< HEAD
+=======
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>>>>>>> origin/master
     android:id="@+id/scroll"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -17,6 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
+<<<<<<< HEAD
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +43,28 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textSize="30sp" />
 
+=======
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="next"
+                android:text="Next" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="save"
+                android:text="Save" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/timer_textview"
+                android:hint="timer"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="30sp" />
+>>>>>>> origin/master
         </LinearLayout>
 
 
