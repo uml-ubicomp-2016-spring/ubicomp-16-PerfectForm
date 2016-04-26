@@ -1,6 +1,5 @@
 package com.sunshine.coldashes.perfectform;
 
-<<<<<<< HEAD
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -10,38 +9,24 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-=======
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.StrictMode;
->>>>>>> origin/master
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-<<<<<<< HEAD
 import android.widget.EditText;
 import android.widget.Toast;
-=======
-import android.os.StrictMode;
->>>>>>> origin/master
 
 /**
  * Created by ronald on 4/7/16.
  */
 public class MainActivity extends AppCompatActivity {
-<<<<<<< HEAD
     private EditText zipcode_edittext;
-=======
-
->>>>>>> origin/master
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -52,21 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-=======
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-
-        getSupportActionBar().setTitle("Running Buddy");
-    }
-
-
-
->>>>>>> origin/master
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-<<<<<<< HEAD
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
@@ -107,10 +76,5 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(), WeatherActivity.class);
         i.putExtra("zip",theZip);
         startActivity(i);
-=======
-    public void changeToWeather (View view) {
-        Intent newIntent = new Intent(this, WeatherActivity.class);
-        startActivity(newIntent);
->>>>>>> origin/master
     }
 }

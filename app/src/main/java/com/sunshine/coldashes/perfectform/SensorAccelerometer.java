@@ -40,17 +40,11 @@ import java.util.ArrayList;
  */
 public class SensorAccelerometer extends Activity implements SensorEventListener {
 
-<<<<<<< HEAD
     private TextView mXValueView, mYValueView, mZValueView, mTimer;
     private EditText mTimeofRun;
     private long lastupdate = 0;
     static int i = 0;
     static int samples = 0;
-=======
-    private TextView mXValueView, mYValueView, mZValueView,mTimer;
-    private long mLastUpdate;
-    static int i = 0;
->>>>>>> origin/master
     static int timesRun = 0;
     static double di = 0;
     static Boolean startRecording = false;
@@ -65,21 +59,14 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
     private ArrayList<Double> listX = new ArrayList<Double>();
     private ArrayList<Double> listY = new ArrayList<Double>();
     private ArrayList<Double> listZ = new ArrayList<Double>();
-<<<<<<< HEAD
     private int ticks = 0;
     private float points = 0;
-=======
-
->>>>>>> origin/master
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accelerometer);
-<<<<<<< HEAD
         mTimeofRun = (EditText) findViewById(R.id.timeofrun);
-=======
->>>>>>> origin/master
         mXValueView = (TextView) findViewById(R.id.x_value_view);
         mYValueView = (TextView) findViewById(R.id.y_value_view);
         mZValueView = (TextView) findViewById(R.id.z_value_view);
@@ -107,21 +94,12 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
     @Override
     protected void onStop() {
         super.onStop();
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/master
     }
 
     protected void onResume() {
         super.onResume();
 
         mSensorManager.registerListener(this, mAcellerometer, SensorManager.SENSOR_DELAY_UI);
-<<<<<<< HEAD
-=======
-        mLastUpdate = System.currentTimeMillis();
->>>>>>> origin/master
     }
 
     @Override
@@ -136,10 +114,6 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
         if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION && startRecording) {
             long actualTime = System.currentTimeMillis();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
             //if 1 second has not passed and have < 50 samples
             double x = event.values[0], y = event.values[1], z = event.values[2];
 
@@ -147,7 +121,6 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
             mYValueView.setText(String.valueOf(y));
             mZValueView.setText(String.valueOf(z));
 
-<<<<<<< HEAD
             if (samples < 16) {
                 listX.add(x);
                 listY.add(y);
@@ -158,32 +131,6 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
             }
 
             samples++;
-=======
-            listX.add(x);
-            listY.add(y);
-            listZ.add(z);
-
-
-
-            //di++;
-
-            //DataPoint pX = new DataPoint(di, x);
-            //ArrayX[i] = pX;
-
-            //DataPoint pY = new DataPoint(di, y);
-            //ArrayY[i] = pY;
-
-            //DataPoint pZ = new DataPoint(di, z);
-            //ArrayZ[i] = pZ;
-
-            //i++;
-                /*
-                if (startRecording = false) {
-                     }
-                */
-
-            mLastUpdate = System.currentTimeMillis();
->>>>>>> origin/master
         }
     }
 
@@ -233,7 +180,6 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
 
     public void startButton(View view) {
         startRecording = true;
-<<<<<<< HEAD
         int timercount = Integer.parseInt(mTimeofRun.getText().toString());
         new CountDownTimer(timercount * 1000, 1000) {
 
@@ -276,16 +222,6 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
             public void onFinish() {
                 mTimer.setText(String.valueOf(points));
 
-=======
-        new CountDownTimer(1800000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                mTimer.setText("seconds remaining: " + millisUntilFinished / 1000);
-            }
-
-            public void onFinish() {
-                mTimer.setText("done!");
->>>>>>> origin/master
                 startRecording = false;
                 Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(1000);
