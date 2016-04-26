@@ -2,12 +2,16 @@ package com.sunshine.coldashes.perfectform;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,22 +21,77 @@ import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 
 /**
- * Created by paul on 4/22/16. edited by Ron
+ * Created by paul on 4/22/16.
  */
 public class WeatherActivity extends Activity {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?zip=";
     private static final String SUFFIX_URL = "&units=imperial";
     private static final String IMG_URL = "http://openweathermap.org/img/w/";
-    private String zip;
-    private ImageView weathericon;
+
+
+
+    private class MyLocationListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location loc) {
+            Toast.makeText(
+                    getBaseContext(),
+                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
+                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
+            String longitude = "Longitude: " + loc.getLongitude();
+            Log.v("debug", longitude);
+            String latitude = "Latitude: " + loc.getLatitude();
+            Log.v("debug", latitude);
+
+        /*------- To get city name from coordinates -------- */
+            String cityName = null;
+            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
+            List<Address> addresses;
+            try {
+                addresses = gcd.getFromLocation(loc.getLatitude(),
+                        loc.getLongitude(), 1);
+                if (addresses.size() > 0) {
+                    System.out.println(addresses.get(0).getLocality());
+                    cityName = addresses.get(0).getLocality();
+                }
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+            String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
+                    + cityName;
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {}
+
+        @Override
+        public void onProviderEnabled(String provider) {}
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {}
+    }
+
+    //Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+    // lat,lng, your current location
+    //List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+
 
     private class SendfeedbackJob extends AsyncTask<String, Void, String> {
 
@@ -40,13 +99,13 @@ public class WeatherActivity extends Activity {
         String weather = "";
         String description = "";
         double temp = 0.0;
-        // never used int humidityPercent = 0;
+        int humidityPercent = 0;
         double windSpeed = 0.0;
-        int sunrise = 0;
-        int sunset = 0;
+        long sunrise = 0;
+        long sunset = 0;
 
-        String sunriseDate = "";
-        String sunsetDate = "";
+        DateFormat sunriseDate = new SimpleDateFormat("HH:mm:ss");
+        DateFormat sunsetDate = new SimpleDateFormat("HH:mm:ss");
 
         /* Not always available for all readings
         int tempmin = 0;
@@ -57,13 +116,7 @@ public class WeatherActivity extends Activity {
         protected String doInBackground(String[] params) {
 
             try {
-                Intent intent = getIntent();
-                String zip = intent.getExtras().getString("zip");
-
-                //Toast testzip = Toast.makeText(getApplicationContext(),zip,Toast.LENGTH_LONG);
-                //testzip.show();
-
-                JSONObject parser = new JSONObject(getWeatherData(zip));
+                JSONObject parser = new JSONObject(getWeatherData("01854,us&appid=2900f6dcae9280512952aac3a316d4b0"));
                 JSONObject object;
                 town = parser.getString("name");
 
@@ -76,17 +129,25 @@ public class WeatherActivity extends Activity {
                 object = parser.getJSONObject("main");
                 temp = object.getDouble("temp");
 
+                humidityPercent = object.getInt("humidity");
+
                 object = parser.getJSONObject("wind");
                 windSpeed = object.getDouble("speed");
+
+
 
                 object = parser.getJSONObject("sys");
                 sunrise = object.getInt("sunrise");
 
-                sunriseDate += new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (sunrise*1000));
+                sunriseDate.setTimeZone(TimeZone.getDefault());
+                //sunriseDate.format(new java.util.Date(sunrise * 1000));
 
                 sunset = object.getInt("sunset");
 
-                sunsetDate += new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (sunset*1000));
+                //sunsetDate += new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (sunset*1000));
+
+                sunriseDate.setTimeZone(TimeZone.getDefault());
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -101,58 +162,62 @@ public class WeatherActivity extends Activity {
             TextView txt = (TextView) findViewById(R.id.town_textview);
             txt.setText(town); // txt.setText(result);
 
-            //txt = (TextView) findViewById(R.id.condition_textview);
-            //txt.setText(weather); // txt.setText(result);
+            txt = (TextView) findViewById(R.id.condition_textview);
+            txt.setText(weather); // txt.setText(result);
 
             txt = (TextView) findViewById(R.id.description_textview);
             txt.setText(description); // txt.setText(result);
-
-            if(description.toLowerCase().contains("sky")) {
-                weathericon.setBackgroundResource(R.drawable.sunny);
-            } else if (description.toLowerCase().contains("clouds")) {
-                weathericon.setBackgroundResource(R.drawable.cloudy);
-            } else if (description.toLowerCase().contains("rain")) {
-                weathericon.setBackgroundResource(R.drawable.rainy);
-            } else if (description.toLowerCase().contains("thunderstorm")) {
-                weathericon.setBackgroundResource(R.drawable.thunder);
-            } else if (description.toLowerCase().contains("snow")) {
-                weathericon.setBackgroundResource(R.drawable.snow);
-            } else if (description.toLowerCase().contains("mist")) {
-                weathericon.setBackgroundResource(R.drawable.mist);
-            } else {
-                weathericon.setBackgroundResource(R.drawable.missing);
-            }
 
             txt = (TextView) findViewById(R.id.tempurature_textview);
             txt.setText(String.valueOf(temp)); // txt.setText(result);
             //txt.setText(String.valueOf(temp)); // txt.setText(result);
 
+            txt = (TextView) findViewById(R.id.humidity_textview);
+            txt.setText(String.valueOf(humidityPercent)); // txt.setText(result);
+
             txt = (TextView) findViewById(R.id.wind_textview);
             txt.setText(String.valueOf(windSpeed)); // txt.setText(result);
 
             txt = (TextView) findViewById(R.id.sunrise_textview);
-            txt.setText(sunriseDate); // txt.setText(result);
+            //txt.setText(sunriseDate.format(new java.util.Date (sunrise*1000))); // txt.setText(result);
+            txt.setText(sunriseDate.format(new java.util.Date (sunrise*1000))); // txt.setText(result);
+            //txt.setText(String.valueOf(sunrise)); // txt.setText(result);
 
             txt = (TextView) findViewById(R.id.sunset_textview);
-            txt.setText(sunsetDate); // txt.setText(result);
-
+            //txt.setText(sunsetDate); // txt.setText(result);
+            txt.setText(sunsetDate.format(new java.util.Date (sunset*1000))); // txt.setText(result);
 
         }
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
-        String test = "RRRRRRR";
+
+        //refresh_button.setOnClickListener(onClickListener);
+
+        //Button button = (Button)findViewById(R.id.refresh_button);
+        //button.setOnClickListener(this);
 
         setContentView(R.layout.activity_weather);
+        //findViewById(R.id.refresh_button).setOnClickListener(refresh_OnClickListener);
+
+        //String output = getWeatherData("London,uk&appid=2900f6dcae9280512952aac3a316d4b0");
+
+        //System.out.println(output);
+        //Log.d("ADebugTag", "Value: " + output);
 
         String main = "Main: ";
-        String base = "London,uk&appid=2900f6dcae9280512952aac3a316d4b0";
+        //String base = "London,uk&appid=2900f6dcae9280512952aac3a316d4b0";
 
-        Bundle bundle = getIntent().getExtras();
-        String zip = bundle.getString("zip");
+        SendfeedbackJob job = new SendfeedbackJob();
+        main += job.execute();
+
+
+        //Context context = getApplicationContext();
+        //int duration = Toast.LENGTH_LONG;
 
         //Toast toast = Toast.makeText(context, main, duration);
         //toast.show();
@@ -160,15 +225,23 @@ public class WeatherActivity extends Activity {
         setContentView(R.layout.activity_weather);
         TextView textView = (TextView) findViewById(R.id.town_textview);
         textView.setText(main);
-        weathericon = (ImageView) findViewById(R.id.weathericon);
-        SendfeedbackJob job = new SendfeedbackJob();
-        main += job.execute(base);
-
-
 
     }
 
+    /*public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+
+        }
+    }*/
+
     private static final String tag = "myActivity";
+
 
     private static JSONObject getObject(String tagName, JSONObject jObj) throws JSONException {
         JSONObject subObj = jObj.getJSONObject(tagName);
@@ -186,6 +259,38 @@ public class WeatherActivity extends Activity {
     private static int getInt(String tagName, JSONObject jObj) throws JSONException {
         return jObj.getInt(tagName);
     }
+
+
+
+    /*private View.OnClickListener onClickListener = new View.OnClickListener() {
+
+        @Override
+        public void onClick(final View v) {
+            switch(v.getId()){
+                case R.id.refresh_button:
+                    String weatherData = getWeatherData("London,uk&appid=2900f6dcae9280512952aac3a316d4b0");
+                    setContentView(R.layout.activity_weather);
+                    TextView textView = (TextView) findViewById(R.id.town_textview);
+                    textView.setText("it worked dude.");
+                    break;
+            }
+
+        }
+    };*/
+
+
+    //On click listener for button1
+    /*final View.OnClickListener refresh_OnClickListener = new View.OnClickListener() {
+        public void onClick(final View v) {
+            //Inform the user the button has been clicked
+            //Toast.makeText(this, "Button1 clicked.", Toast.LENGTH_SHORT).show();
+            setContentView(R.layout.activity_weather);
+            TextView textView = (TextView) findViewById(R.id.town_textview);
+            textView.setText("button has been clicked");
+
+        }
+    };*/
+
 
     public String getWeatherData(String location) {
         HttpURLConnection con = null;
@@ -229,6 +334,7 @@ public class WeatherActivity extends Activity {
         return buffer.toString();
     }
 
+
     public byte[] getImage(String code) {
         HttpURLConnection con = null;
         InputStream is = null;
@@ -261,12 +367,36 @@ public class WeatherActivity extends Activity {
             } catch (Throwable t) {
             }
         }
+
         return null;
+
     }
-    public void schedule(View view) {
-        Intent i = new Intent(this, ScheduleActivity.class);
-        startActivity(i);
+
+
+    /*
+    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
+        protected Long doInBackground(URL... urls) {
+            int count = urls.length;
+            long totalSize = 0;
+            for (int i = 0; i < count; i++) {
+                totalSize += Downloader.downloadFile(urls[i]);
+                publishProgress((int) ((i / (float) count) * 100));
+                // Escape early if cancel() is called
+                if (isCancelled()) break;
+            }
+            return totalSize;
+        }
+
+        protected void onProgressUpdate(Integer... progress) {
+            setProgressPercent(progress[0]);
+        }
+
+        protected void onPostExecute(Long result) {
+            showDialog("Downloaded " + result + " bytes");
+        }
     }
+    */
+
 
 }
 
