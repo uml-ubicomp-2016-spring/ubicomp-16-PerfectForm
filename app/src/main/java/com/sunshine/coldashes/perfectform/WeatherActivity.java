@@ -2,16 +2,12 @@ package com.sunshine.coldashes.perfectform;
 
 import android.app.Activity;
 import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,102 +17,65 @@ import org.json.JSONArray;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InputStream;
 
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
-
 
 /**
- * Created by paul on 4/22/16.
+ * Created by paul on 4/22/16. edited by Ron
+ * This file was created before then, we just had to reimplement
+ * in another version of the project so the rest of the program beyond this point
+ * was pasted in from another version of the project in order to complete
+ * the merge.
  */
 public class WeatherActivity extends Activity {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?zip=";
     private static final String SUFFIX_URL = "&units=imperial";
-    private static final String IMG_URL = "http://openweathermap.org/img/w/";
+    private String zip;
+    private ImageView weathericon;
 
 
-
-    private class MyLocationListener implements LocationListener {
-
-        @Override
-        public void onLocationChanged(Location loc) {
-            Toast.makeText(
-                    getBaseContext(),
-                    "Location changed: Lat: " + loc.getLatitude() + " Lng: "
-                            + loc.getLongitude(), Toast.LENGTH_SHORT).show();
-            String longitude = "Longitude: " + loc.getLongitude();
-            Log.v("debug", longitude);
-            String latitude = "Latitude: " + loc.getLatitude();
-            Log.v("debug", latitude);
-
-        /*------- To get city name from coordinates -------- */
-            String cityName = null;
-            Geocoder gcd = new Geocoder(getBaseContext(), Locale.getDefault());
-            List<Address> addresses;
-            try {
-                addresses = gcd.getFromLocation(loc.getLatitude(),
-                        loc.getLongitude(), 1);
-                if (addresses.size() > 0) {
-                    System.out.println(addresses.get(0).getLocality());
-                    cityName = addresses.get(0).getLocality();
-                }
-            }
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-            String s = longitude + "\n" + latitude + "\n\nMy Current City is: "
-                    + cityName;
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {}
-
-        @Override
-        public void onProviderEnabled(String provider) {}
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {}
-    }
-
-    //Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-    // lat,lng, your current location
-    //List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
-
-
+    /*
+    We use this private class asynchronously so that we can wait to receive internet data
+    and not hold up loading the rest of the weather activity while we do so.
+     */
     private class SendfeedbackJob extends AsyncTask<String, Void, String> {
 
+        /*
+        These are the variables we use to hold each piece of desired json data
+        from the openweathermap api call so that we may later use the variables
+        to display their specific piece of weather information to the screen
+        in the form of textviews.
+         */
         String town = "";
         String weather = "";
         String description = "";
         double temp = 0.0;
-        int humidityPercent = 0;
         double windSpeed = 0.0;
         long sunrise = 0;
         long sunset = 0;
 
-        DateFormat sunriseDate = new SimpleDateFormat("HH:mm:ss");
-        DateFormat sunsetDate = new SimpleDateFormat("HH:mm:ss");
-
-        /* Not always available for all readings
-        int tempmin = 0;
-        int tempmax = 0;*/
+        String sunriseDate = "";
+        String sunsetDate = "";
 
 
+        /*
+        This is what we are using the asynchronous task for,
+        here we are trying to grab all the weather data we need
+        which should always work unless there's an issue with the
+        api key so we have a catch just in case.
+         */
         @Override
         protected String doInBackground(String[] params) {
 
             try {
-                JSONObject parser = new JSONObject(getWeatherData("01854,us&appid=2900f6dcae9280512952aac3a316d4b0"));
+                Intent intent = getIntent();
+                String zip = intent.getExtras().getString("zip");
+
+                JSONObject parser = new JSONObject(getWeatherData(zip));
                 JSONObject object;
                 town = parser.getString("name");
 
@@ -129,25 +88,17 @@ public class WeatherActivity extends Activity {
                 object = parser.getJSONObject("main");
                 temp = object.getDouble("temp");
 
-                humidityPercent = object.getInt("humidity");
-
                 object = parser.getJSONObject("wind");
                 windSpeed = object.getDouble("speed");
-
-
 
                 object = parser.getJSONObject("sys");
                 sunrise = object.getInt("sunrise");
 
-                sunriseDate.setTimeZone(TimeZone.getDefault());
-                //sunriseDate.format(new java.util.Date(sunrise * 1000));
+                sunriseDate += new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (sunrise*1000));
 
                 sunset = object.getInt("sunset");
 
-                //sunsetDate += new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (sunset*1000));
-
-                sunriseDate.setTimeZone(TimeZone.getDefault());
-
+                sunsetDate += new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (sunset*1000));
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -156,91 +107,81 @@ public class WeatherActivity extends Activity {
             return "Data fetch was attempted.";
         }
 
+        /*
+        This occurs after the background process has finished executing.
+        Here we are simply setting the weather icon to the correct image
+        to represent the current conditions, ie. sun for sunny day, rain cloud
+        for rainy weather, etc. We also set the textviews based on the data
+        we fetched in the background process so that the user may see
+        the temperuture, windspeed, etc.
+         */
         @Override
         protected void onPostExecute(String message) {
-            //process message
             TextView txt = (TextView) findViewById(R.id.town_textview);
-            txt.setText(town); // txt.setText(result);
+            txt.setText(town);
 
-            txt = (TextView) findViewById(R.id.condition_textview);
-            txt.setText(weather); // txt.setText(result);
 
             txt = (TextView) findViewById(R.id.description_textview);
-            txt.setText(description); // txt.setText(result);
+            txt.setText(description);
+
+            if(description.toLowerCase().contains("sky")) {
+                weathericon.setBackgroundResource(R.drawable.sunny);
+            } else if (description.toLowerCase().contains("clouds")) {
+                weathericon.setBackgroundResource(R.drawable.cloudy);
+            } else if (description.toLowerCase().contains("rain")) {
+                weathericon.setBackgroundResource(R.drawable.rainy);
+            } else if (description.toLowerCase().contains("thunderstorm")) {
+                weathericon.setBackgroundResource(R.drawable.thunder);
+            } else if (description.toLowerCase().contains("snow")) {
+                weathericon.setBackgroundResource(R.drawable.snow);
+            } else if (description.toLowerCase().contains("mist")) {
+                weathericon.setBackgroundResource(R.drawable.mist);
+            } else {
+                weathericon.setBackgroundResource(R.drawable.missing);
+            }
 
             txt = (TextView) findViewById(R.id.tempurature_textview);
-            txt.setText(String.valueOf(temp)); // txt.setText(result);
-            //txt.setText(String.valueOf(temp)); // txt.setText(result);
-
-            txt = (TextView) findViewById(R.id.humidity_textview);
-            txt.setText(String.valueOf(humidityPercent)); // txt.setText(result);
+            txt.setText(String.valueOf(temp));
 
             txt = (TextView) findViewById(R.id.wind_textview);
-            txt.setText(String.valueOf(windSpeed)); // txt.setText(result);
+            txt.setText(String.valueOf(windSpeed));
 
             txt = (TextView) findViewById(R.id.sunrise_textview);
-            //txt.setText(sunriseDate.format(new java.util.Date (sunrise*1000))); // txt.setText(result);
-            txt.setText(sunriseDate.format(new java.util.Date (sunrise*1000))); // txt.setText(result);
-            //txt.setText(String.valueOf(sunrise)); // txt.setText(result);
+            txt.setText(sunriseDate);
 
             txt = (TextView) findViewById(R.id.sunset_textview);
-            //txt.setText(sunsetDate); // txt.setText(result);
-            txt.setText(sunsetDate.format(new java.util.Date (sunset*1000))); // txt.setText(result);
+            txt.setText(sunsetDate);
 
+            makeSuggestion(sunsetDate, sunriseDate, description, temp, windSpeed);
         }
     }
 
-
+    /*
+    Called on launch of the activity we set up all the information to call the
+    background asynchronous processing which will do the bulk of the work
+    for this activity because we are almost completely reliant on internet
+    data for this activity.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
-        //refresh_button.setOnClickListener(onClickListener);
-
-        //Button button = (Button)findViewById(R.id.refresh_button);
-        //button.setOnClickListener(this);
-
         setContentView(R.layout.activity_weather);
-        //findViewById(R.id.refresh_button).setOnClickListener(refresh_OnClickListener);
-
-        //String output = getWeatherData("London,uk&appid=2900f6dcae9280512952aac3a316d4b0");
-
-        //System.out.println(output);
-        //Log.d("ADebugTag", "Value: " + output);
 
         String main = "Main: ";
-        //String base = "London,uk&appid=2900f6dcae9280512952aac3a316d4b0";
+        String base = "";
 
-        SendfeedbackJob job = new SendfeedbackJob();
-        main += job.execute();
-
-
-        //Context context = getApplicationContext();
-        //int duration = Toast.LENGTH_LONG;
-
-        //Toast toast = Toast.makeText(context, main, duration);
-        //toast.show();
+        Bundle bundle = getIntent().getExtras();
+        String zip = bundle.getString("zip");
 
         setContentView(R.layout.activity_weather);
         TextView textView = (TextView) findViewById(R.id.town_textview);
         textView.setText(main);
-
+        weathericon = (ImageView) findViewById(R.id.weathericon);
+        SendfeedbackJob job = new SendfeedbackJob();
+        main += job.execute(base);
     }
-
-    /*public void onViewCreated(View view, Bundle savedInstanceState)
-    {
-        int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8)
-        {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
-                    .permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-
-        }
-    }*/
-
-    private static final String tag = "myActivity";
 
 
     private static JSONObject getObject(String tagName, JSONObject jObj) throws JSONException {
@@ -260,38 +201,6 @@ public class WeatherActivity extends Activity {
         return jObj.getInt(tagName);
     }
 
-
-
-    /*private View.OnClickListener onClickListener = new View.OnClickListener() {
-
-        @Override
-        public void onClick(final View v) {
-            switch(v.getId()){
-                case R.id.refresh_button:
-                    String weatherData = getWeatherData("London,uk&appid=2900f6dcae9280512952aac3a316d4b0");
-                    setContentView(R.layout.activity_weather);
-                    TextView textView = (TextView) findViewById(R.id.town_textview);
-                    textView.setText("it worked dude.");
-                    break;
-            }
-
-        }
-    };*/
-
-
-    //On click listener for button1
-    /*final View.OnClickListener refresh_OnClickListener = new View.OnClickListener() {
-        public void onClick(final View v) {
-            //Inform the user the button has been clicked
-            //Toast.makeText(this, "Button1 clicked.", Toast.LENGTH_SHORT).show();
-            setContentView(R.layout.activity_weather);
-            TextView textView = (TextView) findViewById(R.id.town_textview);
-            textView.setText("button has been clicked");
-
-        }
-    };*/
-
-
     public String getWeatherData(String location) {
         HttpURLConnection con = null;
         InputStream is = null;
@@ -303,11 +212,8 @@ public class WeatherActivity extends Activity {
             con.setDoOutput(true);
             con.connect();
 
-            //Log.d("ADebugTag2", "Value: " + "in getweatherdata");
             Log.d("ADebugTag", "Value: " + "weatherdata");
 
-
-            // Let's read the response
 
             is = con.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
@@ -334,7 +240,6 @@ public class WeatherActivity extends Activity {
         return buffer.toString();
     }
 
-
     public byte[] getImage(String code) {
         HttpURLConnection con = null;
         InputStream is = null;
@@ -345,7 +250,6 @@ public class WeatherActivity extends Activity {
             con.setDoOutput(true);
             con.connect();
 
-            // Let's read the response
             is = con.getInputStream();
             byte[] buffer = new byte[1024];
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -367,36 +271,86 @@ public class WeatherActivity extends Activity {
             } catch (Throwable t) {
             }
         }
-
         return null;
-
     }
-
 
     /*
-    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
-        protected Long doInBackground(URL... urls) {
-            int count = urls.length;
-            long totalSize = 0;
-            for (int i = 0; i < count; i++) {
-                totalSize += Downloader.downloadFile(urls[i]);
-                publishProgress((int) ((i / (float) count) * 100));
-                // Escape early if cancel() is called
-                if (isCancelled()) break;
-            }
-            return totalSize;
-        }
-
-        protected void onProgressUpdate(Integer... progress) {
-            setProgressPercent(progress[0]);
-        }
-
-        protected void onPostExecute(Long result) {
-            showDialog("Downloaded " + result + " bytes");
-        }
+    We use this to transition into the next view so that the user
+    may choose when to schedule their run based off the weather data
+    and recommendations we feed to them.
+     */
+    public void schedule(View view) {
+        Intent i = new Intent(this, ScheduleActivity.class);
+        startActivity(i);
     }
+
+    /*
+    Here we extrapolate on all the weather data that we retrieved in order
+    to make smart suggestions based off of what weather conditions are the
+    most or least conducive to running. Suggestions are also made to provide
+    advice to improve their running experience if the conditions are suboptimal.
+
+    Suggestions are then placed near the bottom of this activity's screen.
     */
+    public void makeSuggestion(String timeOfSunset, String timeOfSunrise, String theWeather, double theTemp, double theWindspeed) {
+        String suggestion = "";
+
+        boolean cloudy = false;
+        boolean rainy = false;
+        boolean thunderstorm = false;
+        boolean snow = false;
+        boolean mist = false;
+        boolean sunny = false;
+
+        if(theWeather.toLowerCase().contains("sky")) {
+            sunny = true;
+        } else if (theWeather.toLowerCase().contains("clouds")) {
+            cloudy = true;
+        } else if (theWeather.toLowerCase().contains("rain")) {
+            rainy = true;
+        } else if (theWeather.toLowerCase().contains("thunderstorm")) {
+            thunderstorm = true;
+        } else if (theWeather.toLowerCase().contains("snow")) {
+            snow = true;
+        } else if (theWeather.toLowerCase().contains("mist")) {
+            mist = true;
+        }
+
+        if(thunderstorm || snow) {
+            suggestion += "Probably not a good time for a run... but if you insist\n";
+        }
+
+        if(rainy) {
+            suggestion += "Its raining wear a rain jacket or wait till later!\n";
+        }
+
+        if(mist) {
+            suggestion += "Its foggy try to wear flourescent colors!\n";
+        }
 
 
+        if(theTemp > 80 && sunny) {
+            suggestion += "It's a HOT one! Make sure you wear shorts and a T-shirt and maybe run as the sunrises or while it is setting.\n";
+        } else if(theTemp > 80 && cloudy) {
+            suggestion += "It's a HOT one! Since its cloudy anytime should be a good time\n";
+        } else if(theTemp < 40) {
+            suggestion += "It's a COLD one! Try to wear layers\n";
+        }  else if(theTemp > 40 && cloudy){
+            suggestion += "Wow would be perfect day for a run if the sun was out! Anytime would be ok though!\n";
+        } else {
+            suggestion += "Wow seems like a nice day to run! If you would prefer it cooler make sure you run early or as the sun sets!\n";
+        }
+
+        if(theWindspeed > 20) {
+            suggestion += "Its a windy day make sure to wear a windbreaker!\n";
+        } else if(theWindspeed > 10) {
+            suggestion += "Warning slight breeze may want a thin jacket.\n";
+        } else {
+            suggestion += "";
+        }
+
+        TextView txt = (TextView) findViewById(R.id.suggestion_textview);
+        txt.setText(suggestion);
+    }
 }
 

@@ -22,12 +22,7 @@ public class ReadyToRunActivity extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        zipcode_edittext = (EditText) findViewById(R.id.zipcode_edittext);
-
-
         getSupportActionBar().setTitle("Running Buddy");
-
-
     }
 
     @Override
@@ -59,7 +54,12 @@ public class ReadyToRunActivity extends AppCompatActivity {
     }
 
     public void run (View view) {
-        Intent i = new Intent(getApplicationContext(), SensorAccelerometer.class);
+        Intent i = new Intent(getApplicationContext(), run.class);
+        startActivity(i);
+    }
+
+    public void reschedule (View view) {
+        Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
         startActivity(i);
     }
 }

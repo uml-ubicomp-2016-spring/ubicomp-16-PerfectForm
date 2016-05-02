@@ -1,18 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/LightestBlue"
+    android:weightSum="1">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:keepScreenOn="true"
+    android:orientation="horizontal" >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_good"
+        android:id="@+id/pace_imageview" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="95dp"
+        android:src="@drawable/ic_lightgood"
+        android:id="@+id/light_imageview" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_goodform"
+        android:id="@+id/form_imageview" />
 
+</LinearLayout>
+
+    <Chronometer
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:id="@+id/runtimer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Elapsed Time"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="00:00:00"
+        android:id="@+id/ticks_textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Steps Taken"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="100"
+        android:id="@+id/steps_textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Points"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:hint="100"
+        android:id="@+id/points_textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        android:onClick="startPause"
+        android:textSize="25sp"
+        android:id="@+id/timerBtn"
+        android:layout_gravity="center_horizontal"
+        android:checked="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish!"
+        android:onClick="finish"
+        android:textSize="25sp"
+        android:id="@+id/doneBtn"
+        android:layout_gravity="center_horizontal"
+        android:checked="false" />
 </LinearLayout>

@@ -57,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
 
                 return true;
+            case R.id.action_run:
+                Intent newIntent = new Intent(this, run.class);
+                startActivity(newIntent);
+                return true;
+            case R.id.action_alarm:
+                Intent alarmIntent = new Intent(this, ScheduleAlarm.class);
+                startActivity(alarmIntent);
+                return true;
             case R.id.action_analyze:
                 Intent myIntent = new Intent(this, SensorAccelerometer.class);
                 startActivity(myIntent);
@@ -72,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         //Toast testzip = Toast.makeText(getApplicationContext(),theZip,Toast.LENGTH_LONG);
         //testzip.show();
 
-        theZip+=",us&appid=2900f6dcae9280512952aac3a316d4b0";
+        theZip+=",us&appid=1a026939c8842301f733bbc75d1fae78";
         Intent i = new Intent(getApplicationContext(), WeatherActivity.class);
         i.putExtra("zip",theZip);
         startActivity(i);

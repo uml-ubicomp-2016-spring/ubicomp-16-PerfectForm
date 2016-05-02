@@ -1,2 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
+
+    <item
+        jar="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/exploded-aar/com.jjoe64/graphview/4.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="37bf8de5b4f9e7e93006db783b9b3168e32e38e9">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/com.jjoe64-graphview-4.0.1_0d31be4ca34a4dfef8d14fa1c9b9681360015aaf.jar" />
+    </item>
+    <item
+        jar="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-23.3.0_d7da9bca70e2da3f6fcb5b6c521d1395f5dbd6f4.jar" />
+    </item>
+    <item
+        jar="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-23.3.0_6f381ee7c50ac4fc4150f0abcab1a2faa9127100.jar" />
+    </item>
+    <item
+        jar="/home/ronald/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/support-annotations-23.3.0_3831751d3ab0d4b54ebe5bb42f485b2ccaf465b4.jar" />
+    </item>
+    <item
+        jar="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-23.3.0_24f5476078493a5d9ce9a7602262624a006a2dae.jar" />
+    </item>
+    <item
+        jar="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-23.3.0_ba013f04bab47c92923b95aca0e3da918297f5cb.jar" />
+    </item>
+    <item
+        jar="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/home/ronald/Dropbox/Public/ubicomp-16-PerfectForm/app/build/intermediates/pre-dexed/debug/internal_impl-23.3.0_e5de3e0e6e81f334a0fac719454da47472774666.jar" />
+    </item>
+
+</items>

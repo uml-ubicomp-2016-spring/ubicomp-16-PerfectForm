@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">Perfect Form</string>
+    <string name="app_name">Running Buddy</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="songs_array">
+        <item>iransofaraway</item>
+        <item>runningwiththedevil</item>
+        <item>runtothehills</item>
+        <item>adventureofalifetime</item>
+    </string-array>
+
 </resources>

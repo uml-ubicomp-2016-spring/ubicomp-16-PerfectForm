@@ -147,6 +147,7 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
             LineGraphSeries<DataPoint> seriesX = new LineGraphSeries<DataPoint>(ArrayX);
             LineGraphSeries<DataPoint> seriesY = new LineGraphSeries<DataPoint>(ArrayY);
             LineGraphSeries<DataPoint> seriesZ = new LineGraphSeries<DataPoint>(ArrayZ);
+
             seriesX.setOnDataPointTapListener(new OnDataPointTapListener() {
                 @Override
                 public void onTap(Series series, DataPointInterface dataPoint) {
@@ -165,6 +166,7 @@ public class SensorAccelerometer extends Activity implements SensorEventListener
                     Toast.makeText(SensorAccelerometer.this, "Series1: On Data Point clicked: " + dataPoint, Toast.LENGTH_LONG).show();
                 }
             });
+
             graphX.addSeries(seriesX);
             graphY.addSeries(seriesY);
             graphZ.addSeries(seriesZ);

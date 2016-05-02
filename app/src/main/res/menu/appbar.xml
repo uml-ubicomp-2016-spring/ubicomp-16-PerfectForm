@@ -6,6 +6,18 @@
         android:title="Settings"
 
         app:showAsAction="never"/>
+
+    <item android:id="@+id/action_run"
+        android:title="Run"
+
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/action_alarm"
+        android:title="Alarm"
+
+        app:showAsAction="never"/>
+
+
     <item android:id="@+id/action_analyze"
         android:title="Analyze"
 

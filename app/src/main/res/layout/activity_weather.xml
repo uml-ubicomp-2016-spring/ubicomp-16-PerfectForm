@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/LightestBlue">
 
     <TextView
         android:id="@+id/town_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Town"
-        android:textSize="30sp"
+        android:textSize="25sp"
         android:layout_gravity="center"/>
 
     <LinearLayout
@@ -23,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Temp"
             android:gravity="center"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:layout_gravity="center"/>
 
         <ImageButton
@@ -41,7 +42,7 @@
             android:layout_height="wrap_content"
             android:text="Wind"
             android:gravity="center"
-            android:textSize="30sp"
+            android:textSize="25sp"
             android:layout_gravity="center"/>
 
     </LinearLayout>
@@ -52,30 +53,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="desciption"
-        android:textSize="30sp"
+        android:textSize="25sp"
+        android:layout_marginBottom="20dp"
+
         android:layout_gravity="center"/>
-
-
-
-
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunrise"
+        android:textSize="25sp"
+        android:layout_gravity="center"/>
     <TextView
         android:id="@+id/sunrise_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="blank"
-        android:textSize="30sp"
+        android:layout_marginBottom="20dp"
+        android:hint="Sunrise"
+        android:textSize="25sp"
         android:layout_gravity="center"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sunset"
+        android:textSize="25sp"
+        android:layout_gravity="center"/>
     <TextView
         android:id="@+id/sunset_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="blank"
-        android:textSize="30sp"
+        android:hint="Sunset"
+        android:layout_marginBottom="20dp"
+        android:textSize="25sp"
         android:layout_gravity="center"/>
-
-
+    <TextView
+        android:id="@+id/suggestion_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Suggestion"
+        android:textSize="25sp"
+        android:layout_gravity="center"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

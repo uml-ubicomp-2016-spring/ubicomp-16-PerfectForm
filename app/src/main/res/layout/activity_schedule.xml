@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@color/LightestBlue">
 
     <TimePicker
         android:layout_width="wrap_content"
@@ -19,12 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:text="Start time: " />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
             android:id="@+id/start_time_textview"
             android:hint="8:00" />
 
@@ -39,9 +44,5 @@
         android:text="Save"
         android:id="@+id/schedule_btn" />
 
-    <Chronometer
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timer_chrono"
-        android:layout_gravity="center_horizontal" />
+
 </LinearLayout>

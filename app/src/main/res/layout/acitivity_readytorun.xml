@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/LightestBlue" >
 
 
            <android.support.v7.widget.Toolbar
@@ -19,6 +20,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
             android:textColor="@color/DarkRed"
             android:text="Welcome\n to Running\n Buddy"
             android:textSize="60sp"
@@ -26,7 +29,7 @@
             android:gravity="center" />
 
         <Button
-            android:layout_margin="50dp"
+            android:layout_margin="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="run"
@@ -34,4 +37,12 @@
             android:text="Run!"
             android:textSize="35sp"/>
 
+    <Button
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="reschedule"
+        android:layout_gravity="center"
+        android:text="Reschedule?"
+        android:textSize="35sp"/>
     </LinearLayout>
