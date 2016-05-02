@@ -194,7 +194,8 @@ public class WeatherActivity extends Activity {
 
     This lesson was a great jumping off point for someeone who had never programmed
     for android before and it helped to teach exactly how we can access certain pieces
-    of data remotely over the internet.
+    of data remotely over the internet. The lesson may be found here,
+    http://www.survivingwithandroid.com/2013/05/build-weather-app-json-http-android.html
      */
 
     /*
