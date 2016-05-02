@@ -34,6 +34,7 @@ import java.net.URL;
 public class WeatherActivity extends Activity {
     private static final String BASE_URL = "http://api.openweathermap.org/data/2.5/weather?zip=";
     private static final String SUFFIX_URL = "&units=imperial";
+    private static final String IMG_URL = "http://openweathermap.org/img/w/";
     private String zip;
     private ImageView weathericon;
 
@@ -184,6 +185,22 @@ public class WeatherActivity extends Activity {
     }
 
 
+    /*
+    The following functions before the schedule function
+    are modified versions taken from the surviving with android
+    tutorial and lesson sequence. These functions are only used to provide tools to
+    fectch the http data from the internet and allow for targeting specific json data
+    once we have relocated to the correct scope in order to inspect them.
+
+    This lesson was a great jumping off point for someeone who had never programmed
+    for android before and it helped to teach exactly how we can access certain pieces
+    of data remotely over the internet.
+     */
+
+    /*
+    JSON tools used to extract certain fields in the our current scope
+    and set them to the appropriate data type.
+     */
     private static JSONObject getObject(String tagName, JSONObject jObj) throws JSONException {
         JSONObject subObj = jObj.getJSONObject(tagName);
         return subObj;
@@ -201,6 +218,9 @@ public class WeatherActivity extends Activity {
         return jObj.getInt(tagName);
     }
 
+    /*
+    Retrieve weather data from the internet, provides exception handling.
+     */
     public String getWeatherData(String location) {
         HttpURLConnection con = null;
         InputStream is = null;
@@ -240,6 +260,9 @@ public class WeatherActivity extends Activity {
         return buffer.toString();
     }
 
+    /*
+    Load extra information for which weather icons to use.
+     */
     public byte[] getImage(String code) {
         HttpURLConnection con = null;
         InputStream is = null;
