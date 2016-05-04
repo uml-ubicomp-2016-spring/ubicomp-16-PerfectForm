@@ -20,3 +20,6 @@ Update #3 As of now the we have created a prototype of the app consisting of alm
 Update #4 Should be able to fetch weather information and use it in the app. Will also have added changes to the sampling rate for the accelerometer as well as a timer so that can decide how long to record data. Will have a metric for deciding whether or not someone is running with good form. Will be using the stepcounter provided by android api to see if the runners pace is too slow or too fast as well.
 
 update #5 Weather now works when correct zip code is entered. The weater screen will show an icon depeneding on the weather conditions in the area. Working on fixing the sunrise and sundown time. Worked out metrics for whether the runner is in good form or not. We came up with some bounds the users accelerometer readings should follow based on test data taken from people who have been running for years versus people who are new to running. Will formalize these metrics before the projects end. Added a points system so the user can get an idea of how well they ran. Will add more precise feedback in the followuing week.
+
+Video Demo on Final Project:
+[https://www.youtube.com/watch?v=lFR58SVBnRY](https://www.youtube.com/watch?v=lFR58SVBnRY)
