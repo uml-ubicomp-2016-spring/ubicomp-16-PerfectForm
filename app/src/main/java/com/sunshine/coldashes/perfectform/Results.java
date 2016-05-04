@@ -26,6 +26,7 @@ public class Results extends Activity {
         super.onCreate(savedInstanceStates);
         setContentView(R.layout.activity_done);
 
+        // retrieves the arraylists from the run activity
         ArrayList<Double> paceArray = (ArrayList<Double>) getIntent().getSerializableExtra("paceArray");
         String paceCond = getIntent().getStringExtra("paceCond");
         ArrayList<Float> pointsArr = (ArrayList<Float>) getIntent().getSerializableExtra("pointsArr");
@@ -36,6 +37,7 @@ public class Results extends Activity {
         TextView paceSuggestion_tv = (TextView) findViewById(R.id.workon_textview);
         TextView formSuggestion_tv = (TextView) findViewById(R.id.formresults_tv);
 
+        // checks the data and sets the image above each graph
         if (paceCond.equals("slow")) {
             paceSuggestion_tv.setText("Speed up next time!");
             paceresult_imageview.setImageResource(R.drawable.ic_slow);
@@ -50,6 +52,7 @@ public class Results extends Activity {
         GraphView pace_graph = (GraphView) findViewById(R.id.pace_graph);
         GraphView form_graph = (GraphView) findViewById(R.id.form_graph);
 
+        /* test data used to make sure the graphs worked without needing to run
         int x = 0;
         while (x < 25) {
             paceArray.add(200.0);
@@ -85,7 +88,9 @@ public class Results extends Activity {
             pointsArr.add(58f);
             x++;
         }
+        */
 
+        // average was good if points are greater than half the minutes you ran
         int size = pointsArr.size() - 1;
         float total = pointsArr.get(size);
         if (total < (size / 2)) {
@@ -96,6 +101,7 @@ public class Results extends Activity {
             formresult_imageview.setImageResource(R.drawable.ic_goodform);
         }
 
+        //building an array of data points off the arraylist
         DataPoint[] paces = convertToArray(paceArray, 0);
         DataPoint[] pointsOT = convertToArray(pointsArr);
 
@@ -105,6 +111,7 @@ public class Results extends Activity {
         LineGraphSeries<DataPoint> pointsSeries = new LineGraphSeries<DataPoint>(pointsOT);
         form_graph.addSeries(pointsSeries);
 
+        // sets up the graphs x and y axis depending on lenght of run
         Viewport paceview = pace_graph.getViewport();
         paceview.setYAxisBoundsManual(true);
         paceview.setMaxY(220);
@@ -124,6 +131,7 @@ public class Results extends Activity {
         formview.setMinX(0);
     }
 
+    // converts the arraylist to datapoints the graph can plot
     public DataPoint[] convertToArray(ArrayList<Double> theList, int num) {
         int i = 0;
         DataPoint[] newArray = new DataPoint[theList.size()];
@@ -133,7 +141,7 @@ public class Results extends Activity {
         }
         return newArray;
     }
-
+    // overloaded so that could do the same procedure for floats as doubles
     public DataPoint[] convertToArray(ArrayList<Float> theList) {
         int i = 0;
         DataPoint[] newArray = new DataPoint[theList.size()];
@@ -144,6 +152,7 @@ public class Results extends Activity {
         return newArray;
     }
 
+    // end run and start anew
     public void restart(View view) {
         Intent main_menu = new Intent(this, MainActivity.class);
         startActivity(main_menu);

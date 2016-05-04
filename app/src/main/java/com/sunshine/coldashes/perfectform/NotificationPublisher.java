@@ -16,8 +16,10 @@ public class NotificationPublisher extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
+        // gets the notification manager service
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+        // creates the notification when the alarm goes off shows it and vibrates
         Notification notification = intent.getParcelableExtra(NOTIFICATION);
         int id = intent.getIntExtra(NOTIFICATION_ID, 0);
         notificationManager.notify(id, notification);

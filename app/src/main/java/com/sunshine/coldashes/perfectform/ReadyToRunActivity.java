@@ -54,11 +54,13 @@ public class ReadyToRunActivity extends AppCompatActivity {
     }
 
     public void run (View view) {
+        // takes to the run activity to start the run
         Intent i = new Intent(getApplicationContext(), run.class);
         startActivity(i);
     }
 
     public void reschedule (View view) {
+        // allows to change time to run
         Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
         startActivity(i);
     }

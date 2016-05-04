@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/LightestBlue" >
+    android:background="@color/LightestBlue"
+    android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/LightBlue"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-           <android.support.v7.widget.Toolbar
-            android:id="@+id/my_toolbar"
-            android:backgroundTint="@color/LightBlue"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-
-            android:textColor="@color/DarkRed"
-            android:text="Welcome\n to Running\n Buddy"
-            android:textSize="60sp"
-            android:lines="3"
-            android:gravity="center" />
-
-        <Button
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="run"
-            android:layout_gravity="center"
-            android:text="Run!"
-            android:textSize="35sp"/>
+        android:gravity="center"
+        android:lines="3"
+        android:text="Welcome\n to Running\n Buddy"
+        android:textColor="@color/DarkRed"
+        android:textSize="60sp" />
 
     <Button
-        android:layout_margin="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="reschedule"
         android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:onClick="run"
+        android:text="Run!"
+        android:textSize="35sp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:onClick="reschedule"
         android:text="Reschedule?"
-        android:textSize="35sp"/>
-    </LinearLayout>
+        android:textSize="35sp" />
+</LinearLayout>

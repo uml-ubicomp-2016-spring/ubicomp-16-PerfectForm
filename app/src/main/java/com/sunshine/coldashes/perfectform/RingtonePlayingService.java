@@ -23,7 +23,7 @@ import java.util.Random;
 
 
 /**
- * Created by Bobby on 4/23/2016. */
+ * Created by Bobby on 4/23/2016.  unused feature*/
 public class RingtonePlayingService extends Service{
 
     MediaPlayer media_song;

@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
-        android:title="Settings"
-
-        app:showAsAction="never"/>
-
+    <!-- all items left in overflow -->
     <item android:id="@+id/action_run"
         android:title="Run"
-
         app:showAsAction="never"/>
 
     <item android:id="@+id/action_alarm"
         android:title="Alarm"
-
         app:showAsAction="never"/>
 
 
     <item android:id="@+id/action_analyze"
         android:title="Analyze"
-
         app:showAsAction="never"/>
 
 </menu>

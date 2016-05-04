@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,32 +14,35 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 /**
- * Created by ronald on 4/7/16.
+ * Created by ronald on 4/7/16 opens up while it is not time to run.
  */
 public class WaitingActivity extends AppCompatActivity {
-    private EditText zipcode_edittext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
 
+        // setup toolbar
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        zipcode_edittext = (EditText) findViewById(R.id.zipcode_edittext);
-
+        //recieve the time the run should begin
         Bundle bundle = getIntent().getExtras();
         String scheduledTime = bundle.getString("TimeToRun");
 
+        //set the text that the run will begin
         TextView scheduled = (TextView) findViewById(R.id.scheduledtime_textview);
 
+        // make sure not to get nullpointer exception when getting text
+        try {
         String temp = scheduled.getText().toString();
         temp += scheduledTime;
-
         scheduled.setText(temp);
-
-        getSupportActionBar().setTitle("Running Buddy");
+            getSupportActionBar().setTitle("Running Buddy");
+        } catch(NullPointerException e) {
+            Log.d("WaitingActivity:","NullPointerException getSupportActionBar");
+        }
     }
 
     @Override
@@ -55,11 +59,19 @@ public class WaitingActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+        // Handle overflow menu
         switch (item.getItemId()) {
-            case R.id.action_settings:
-
+            // jump to running activity
+            case R.id.action_run:
+                Intent newIntent = new Intent(this, run.class);
+                startActivity(newIntent);
                 return true;
+            // set schedule run activity schedules alarm
+            case R.id.action_alarm:
+                Intent alarmIntent = new Intent(this, ScheduleAlarm.class);
+                startActivity(alarmIntent);
+                return true;
+            // analyze has all sensors we used for testing purposes
             case R.id.action_analyze:
                 Intent myIntent = new Intent(this, SensorAccelerometer.class);
                 startActivity(myIntent);
@@ -70,7 +82,7 @@ public class WaitingActivity extends AppCompatActivity {
     }
 
     public void Reschedule(View view) {
-
+        // change to the schedule activity
         Intent i = new Intent(getApplicationContext(), ScheduleActivity.class);
         startActivity(i);
     }

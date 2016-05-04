@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/LightestBlue" >
-
+    android:background="@color/LightestBlue"
+    android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
-            android:backgroundTint="@color/LightBlue"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
+            android:background="@color/LightBlue"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
 
-            android:textColor="@color/DarkRed"
-            android:text="Welcome\n to Running\n Buddy"
-            android:textSize="60sp"
+            android:gravity="center"
             android:lines="3"
-            android:gravity="center" />
+            android:text="Welcome\n to Running\n Buddy"
+            android:textColor="@color/DarkRed"
+            android:textSize="60sp" />
 
         <TextView
-            android:paddingTop="30dp"
+            android:id="@+id/scheduledtime_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Scheduled time:"
-            android:textSize="30sp"
             android:layout_gravity="center"
-            android:id="@+id/scheduledtime_textview" />
+            android:paddingTop="30dp"
+            android:text="Scheduled time:"
+            android:textSize="30sp" />
 
         <Button
-            android:layout_margin="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="Reschedule"
             android:layout_gravity="center"
+            android:layout_margin="50dp"
+            android:onClick="Reschedule"
             android:text="Reschedule"
             android:textSize="35sp"/>
 

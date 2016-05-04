@@ -1,7 +1,6 @@
 package com.sunshine.coldashes.perfectform;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,18 +10,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import junit.framework.TestCase;
-
 /**
- * Created by Coldashes on 4/2/2016.
+ * Created by Coldashes NOT BEING USED ONLY FOR DEBUG.
  */
 public class GyroscopeSensor extends Activity implements SensorEventListener {
     private static final int UPDATE_THRESHOLD = 5000;
-
     private SensorManager mSensorManager;
     private Sensor mGyroscope;
     private long mLastUpdate;
     private TextView gyrotext;
+
     @Override
     public void onCreate(Bundle SavedInstanceState) {
         super.onCreate(SavedInstanceState);
@@ -32,7 +29,6 @@ public class GyroscopeSensor extends Activity implements SensorEventListener {
 
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mGyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-
 
     }
     protected void onResume() {

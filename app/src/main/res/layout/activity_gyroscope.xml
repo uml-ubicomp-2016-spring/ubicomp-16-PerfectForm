@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Gryoscope"
-        android:textSize="50dp"
+        android:textSize="50sp"
         android:id="@+id/gyroscope_textview"
         android:layout_gravity="center_horizontal" />
 

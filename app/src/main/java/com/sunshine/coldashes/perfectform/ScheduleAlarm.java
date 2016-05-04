@@ -25,6 +25,7 @@ import com.sunshine.coldashes.perfectform.R;
 
 import java.util.Calendar;
 
+// made by bobby unused but basis for schedule acitivity
 public class ScheduleAlarm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     //Create alarm manager
@@ -38,7 +39,7 @@ public class ScheduleAlarm extends AppCompatActivity implements AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
         this.context = this;
 
         //initializing Alarm manager
